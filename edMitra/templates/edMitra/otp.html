@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        .otp-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="otp-container">
+    <h2>OTP Verification</h2>
+    <form action="/otp_verification/" method="post" id="otpForm">
+        {% csrf_token %}
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" name="otp" maxlength="6" required>
+        <button type="submit">Verify OTP</button>
+    {% if messages %}
+    {% for message in messages %}
+    <p class="message" id="message">{{message}}</p>
+    {% endfor %}
+
+    {% endif %}
+    </form>
+</div>
+
+<!--<script>
+    const predefinedOTP = "123456"; // The OTP to verify against (for demo purposes)
+
+    document.getElementById('otpForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting traditionally
+
+        const enteredOTP = document.getElementById('otp').value;
+        const messageElement = document.getElementById('message');
+
+        if (enteredOTP === predefinedOTP) {
+            messageElement.style.color = "green";
+            messageElement.textContent = "OTP Verified Successfully!";
+        } else {
+            messageElement.style.color = "red";
+            messageElement.textContent = "Invalid OTP. Please try again.";
+        }
+    });
+</script>
+-->
+</body>
+</html>

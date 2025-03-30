@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #aecded;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*height: 100vh;*/
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 2.5em;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        input[type="password"]:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+
+        .gender-options {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .gender-options label {
+            margin-left: 5px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button.submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #6c63ff, #00d2ff);
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button.submit-btn:hover {
+            background: linear-gradient(135deg, #00d2ff, #6c63ff);
+        }
+
+        .input-group input[type="text"]:invalid,
+        .input-group input[type="email"]:invalid,
+        .input-group input[type="tel"]:invalid,
+        .input-group input[type="password"]:invalid {
+            border-color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+                max-width: 100%;
+            }
+
+            h2 {
+                font-size: 2.2em;
+                margin-bottom: 25px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="date"],
+            input[type="password"] {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            button.submit-btn {
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            h2 {
+                font-size: 2em;
+                margin-bottom: 20px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="date"],
+            input[type="password"] {
+                padding: 8px;
+                font-size: 13px;
+            }
+
+            button.submit-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .gender-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Register</h2>
+        <form action="" method="post" id="registration-form" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="first_name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="last_name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="tel" id="phone-number" name="phone_number" pattern="\d{10}" inputmode="numeric" maxlength="10" required title="Phone number must be exactly 10 digits">
+            </div>
+
+            <div class="input-group">
+                <label for="gender">Gender</label>
+                <div class="gender-options">
+                    <input type="radio" id="male" name="gender" value="M" required>
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="F" required>
+                    <label for="female">Female</label>
+                    <input type="radio" id="other" name="gender" value="O" required>
+                    <label for="other">Other</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+
+            <div class="input-group">
+                <label for="pin-code">PIN Code</label>
+                <input type="text" id="pin-code" name="pin_code" pattern="\d{6}" inputmode="numeric" maxlength="6" required title="PIN code must be exactly 6 digits">
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password (at least 8 characters, including letters, digits, and special characters)</label>
+                <input type="password" id="password" name="password" required pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}">
+                <small style="color: #e74c3c;">Password must be at least 8 characters long and include letters, digits, and special characters.</small>
+            </div>
+
+            <div class="input-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm_password" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+</html>
